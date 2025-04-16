@@ -14,11 +14,16 @@ class Person:
             name = person_dict["name"]
             age = person_dict["age"]
             person = Person(name, age)
-            person_list.append(person)   
+            person_list.append(person)  
+             
+        for person_data in people_dict:
+            name = person_data["name"]
+            person = Person.people[name]    
+            
             if "wife" in person_dict and person_dict["wife"]:
                 wife_name = person_dict["wife"]
                 person.wife = Person.people[wife_name]
-                
+
             if "husband" in person_dict and person_dict["husband"]:
                 husband_name = person_dict["husband"]
                 person.husband = Person.people[husband_name]
