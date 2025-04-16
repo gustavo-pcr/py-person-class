@@ -7,22 +7,14 @@ class Person:
         Person.people[name] = self
 
 
-def create_person_list(people_dict: list):
-    person_list = []
+def create_person_list(people_data: list):
+    # Step 1: Create Person instances using list comprehension
+    person_list = [Person(p["name"], p["age"]) for p in people_data]
 
-    # Step 1: Create all Person instances first
-    for person_data in people_dict:
-        person = Person(person_data["name"], person_data["age"])
-        person_list.append(person)
-
-    # Step 2: Assign relationships
-    for person_data in people_dict:
-        person = Person.people[person_data["name"]]
-
-        if person_data.get("wife"):
-            person.wife = Person.people[person_data["wife"]]
-
-        if person_data.get("husband"):
-            person.husband = Person.people[person_data["husband"]]
+    # Step 2: Assign relationships using short-circuit logic
+    for p in people_data:
+        person = Person.people[p["name"]]
+        p.get("wife") and setattr(person, "wife", Person.people[p["wife"]])
+        p.get("husband") and setattr(person, "husband", Person.people[p["husband"]])
 
     return person_list
